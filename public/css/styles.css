@@ -1,0 +1,16 @@
+body {
+    display: flex;
+
+}
+
+.header-list {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    gap: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
