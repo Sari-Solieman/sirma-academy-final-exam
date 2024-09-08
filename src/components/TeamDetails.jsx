@@ -64,9 +64,8 @@ export default function TeamDetails() {
         };
 
         return players
-            .filter(player => player.TeamID === teamID) // Ensure TeamID matches
+            .filter(player => player.TeamID === teamID) 
             .sort((a, b) => {
-                // Use the position order for sorting; if not found, assign a large number (999)
                 const posA = positionOrder[a.Position] || 999;
                 const posB = positionOrder[b.Position] || 999;
                 return posA - posB;
