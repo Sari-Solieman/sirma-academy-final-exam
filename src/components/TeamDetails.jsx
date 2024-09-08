@@ -12,10 +12,10 @@ export default function TeamDetails() {
 
                 const teamText = await teamResponse.text();
                 const teamRows = teamText.split('\n').map(row => row.split(','));
-                const teamHeaders = teamRows[0];
+                const firstTeam = teamRows[0];
                 const teamData = teamRows.slice(1).map(row => {
                     const obj = {};
-                    teamHeaders.forEach((header, index) => {
+                    firstTeam.forEach((header, index) => {
                         obj[header.trim()] = row[index]?.trim();
                     });
                     return obj;
@@ -24,7 +24,7 @@ export default function TeamDetails() {
                 setTeams(teamData);
 
             } catch (error) {
-                return('Error fetching teams CSV data:', error);
+                return('Error fetching teams data:', error);
             }
         };
 
@@ -35,18 +35,18 @@ export default function TeamDetails() {
 
                 const playerText = await playerResponse.text();
                 const playerRows = playerText.split('\n').map(row => row.split(','));
-                const playerHeaders = playerRows[0];
+                const firstPlayer = playerRows[0];
                 const playerData = playerRows.slice(1).map(row => {
                     const obj = {};
-                    playerHeaders.forEach((header, index) => {
-                        obj[header.trim()] = row[index]?.trim();
+                    firstPlayer.forEach((player, index) => {
+                        obj[player.trim()] = row[index]?.trim();
                     });
                     return obj;
                 });
                 setPlayers(playerData);
 
             } catch (error) {
-                return('Error fetching players CSV data:', error);
+                return('Error fetching players data:', error);
             }
         };
 
