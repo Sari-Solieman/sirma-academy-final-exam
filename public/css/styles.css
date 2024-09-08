@@ -1,16 +1,55 @@
-body {
-    display: flex;
-
-}
-
-.header-list {
+.bracket-view {
     display: flex;
     flex-direction: row;
-    list-style-type: none;
+    gap: 50px;
+}
+
+.bracket {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
     gap: 10px;
 }
 
-a {
-    text-decoration: none;
-    color: blue;
+.team-score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 3px;
+}
+
+.match {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 2px solid;
+    width: 200px;
+    height: 70px;
+}
+
+.date {
+    text-align: center;
+}
+
+.qf-bracket {
+    height: 78vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 57px;
+}
+
+.sf-bracket {
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 150px;
+}
+
+.f-bracket {
+    display: flex;
+    flex-direction: column;
+    margin-top: 310px;
 }

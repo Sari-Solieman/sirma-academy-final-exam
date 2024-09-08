@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import parseDate from "../dataFormat";
 
 export default function Matches() {
     const [matches, setMatches] = useState([]);
@@ -49,7 +50,7 @@ export default function Matches() {
                 return ('Error fetching matches data:', error)
             }
         };
-        
+
         fetchMatchData();
         fetchTeamData();
     }, [])
@@ -58,30 +59,120 @@ export default function Matches() {
         const team = teams.find(team => team.ID === teamID);
         return team ? team.Name : 'Unknown';
     };
+    const parseScore = (score) => {
+        const scoreParts = score.split('-');
+        const aTeamScore = scoreParts[0]?.trim();
+        const bTeamScore = scoreParts[1]?.trim();
+
+        return { aTeamScore, bTeamScore };
+    }
 
 
-    const renderMatch = (match, index) => (
-        <div className="match" key={index}>
-            <div className="team">{getTeamName(match.ATeamID)}</div>
-            <div className="score">{match.Score}</div>
-            <div className="team">{getTeamName(match.BTeamID)}</div>
-            <div className="date">{match.Date}</div>
-        </div>
-    );
+    const renderMatch = (match, index,) => {
+        const { aTeamScore, bTeamScore } = parseScore(match.Score);
+        return (
+
+            <div className="match" key={index}>
+                <div className="date">{match.Date}</div>
+                <div className="team-score">
+                    <div className="team">{getTeamName(match.ATeamID)}</div>
+                    <div className="score">{aTeamScore}</div>
+                </div>
+                <div className="team-score">
+                    <div className="team">{getTeamName(match.BTeamID)}</div>
+                    <div className="score">{bTeamScore}</div>
+                </div>
+            </div>
+        );
+
+    }
+
+    const groupMatchesByStage = () => {
+        const groupStageEnd = parseDate('26-06-2024');
+        const roundOf16End = parseDate('02-07-2024');
+        const quarterFinalsEnd = parseDate('06-07-2024');
+        const semiFinalsEnd = parseDate('10-07-2024');
+
+        const groupStage = matches.filter(match => parseDate(match.Date) <= groupStageEnd);
+
+        const roundOf16 = matches.filter(match => {
+            const matchDate = parseDate(match.Date);
+            return matchDate > groupStageEnd && matchDate <= roundOf16End
+        });
+
+        const quarterFinals = matches.filter(match => {
+            const matchDate = parseDate(match.Date);
+            return matchDate > roundOf16End && matchDate <= quarterFinalsEnd
+        });
+
+        const semiFinals = matches.filter(match => {
+            const matchDate = parseDate(match.Date);
+            return matchDate > quarterFinalsEnd && matchDate <= semiFinalsEnd
+        });
+
+        const final = matches.filter(match => parseDate(match.Date) > semiFinalsEnd);
+
+        return { groupStage, roundOf16, quarterFinals, semiFinals, final };
+    };
+
+
+
+    const { groupStage, roundOf16, quarterFinals, semiFinals, final } = groupMatchesByStage();
+
 
 
     return (
-        <div className="bracket-container">
-            <h2>Tournament Bracket</h2>
-            <div className="bracket">
-                {matches.map((match, index) => (
-                    <div key={index} className={`round round-${index}`}>
-                        {renderMatch(match, index)}
-                    </div>
-                ))}
+        <div className="bracket-view">
+            {<div className="group-stage">
+                <h2>Group Stage</h2>
+                <div className="bracket">
+                    {groupStage.map((match, index) => (
+                        <div key={index}>
+                            {renderMatch(match, index)}
+                        </div>
+                    ))}
+                </div>
+            </div>}
+            <div>
+                <h2>Round Of 16</h2>
+                <div className="bracket">
+                    {roundOf16.map((match, index) => (
+                        <div key={index}>
+                            {renderMatch(match, index,)}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div>
+                <h2>Quarter Finals</h2>
+                <div className="qf-bracket">
+                    {quarterFinals.map((match, index) => (
+                        <div key={index}>
+                            {renderMatch(match, index,)}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div>
+                <h2>Semi Finals</h2>
+                <div className="sf-bracket">
+                    {semiFinals.map((match, index) => (
+                        <div key={index}>
+                            {renderMatch(match, index,)}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div>
+                <h2>Final</h2>
+                <div className="f-bracket">
+                    {final.map((match, index) => (
+                        <div key={index}>
+                            {renderMatch(match, index,)}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
-
-
-}
+};
