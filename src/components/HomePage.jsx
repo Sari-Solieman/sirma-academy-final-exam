@@ -1,78 +1,45 @@
-import { useEffect, useState } from "react"
 import parseDate from "../dataFormat";
+import { useNavigate } from "react-router-dom";
+import { parseScore } from "../parseScore";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMatches, fetchTeams } from '../queries/dataQuery'
 
 export default function Matches() {
-    const [matches, setMatches] = useState([]);
-    const [teams, setTeams] = useState([]);
 
-    useEffect(() => {
-        const fetchMatchData = async () => {
-            try {
-                const matchResponse = await fetch('/data/matches.csv');
-                if (!matchResponse.ok) throw new Error('Matches csv load error');
+    const navigate = useNavigate();
 
-                const matchText = await matchResponse.text();
-                const matchRow = matchText.split('\n').map(row => row.split(','));
-                const firstMatch = matchRow[0].map(match => match.trim());
-                const matchData = matchRow.slice(1).map(row => {
-                    const matches = {};
-                    firstMatch.forEach((match, index) => {
-                        matches[match] = row[index]?.trim();
+    // Fetch matches using React Query
+    const { data: matches, isLoading: matchesLoading, error: matchesError } = useQuery({
+        queryKey: ['matches'],
+        queryFn: fetchMatches,
+    });
 
-                    });
-                    return matches
-                })
-                setMatches(matchData)
+    // Fetch teams using React Query
+    const { data: teams, isLoading: teamsLoading, error: teamsError } = useQuery({
+        queryKey: ['teams'],
+        queryFn: fetchTeams,
+    });
 
-            } catch (error) {
-                return ('Error fetching matches data:', error)
-            }
-        };
-        const fetchTeamData = async () => {
-            try {
-                const teamResponse = await fetch('/data/teams.csv');
-                if (!teamResponse.ok) throw new Error('Teams csv load error');
-
-                const teamText = await teamResponse.text();
-                const teamRow = teamText.split('\n').map(row => row.split(','));
-                const firstTeam = teamRow[0].map(match => match.trim());
-                const teamData = teamRow.slice(1).map(row => {
-                    const teams = {};
-                    firstTeam.forEach((match, index) => {
-                        teams[match] = row[index]?.trim();
-
-                    });
-                    return teams
-                })
-                setTeams(teamData)
-
-            } catch (error) {
-                return ('Error fetching matches data:', error)
-            }
-        };
-
-        fetchMatchData();
-        fetchTeamData();
-    }, [])
+    // Handle loading and error states
+    if (matchesLoading || teamsLoading) return <div>Loading...</div>;
+    if (matchesError) return <div>Error fetching matches: {matchesError.message}</div>;
+    if (teamsError) return <div>Error fetching teams: {teamsError.message}</div>;
 
     const getTeamName = (teamID) => {
         const team = teams.find(team => team.ID === teamID);
         return team ? team.Name : 'Unknown';
     };
-    const parseScore = (score) => {
-        const scoreParts = score.split('-');
-        const aTeamScore = scoreParts[0]?.trim();
-        const bTeamScore = scoreParts[1]?.trim();
-
-        return { aTeamScore, bTeamScore };
-    }
 
 
-    const renderMatch = (match, index,) => {
+    const renderMatch = (match) => {
         const { aTeamScore, bTeamScore } = parseScore(match.Score);
+
+        const matchClickHandler = () => {
+            navigate(`/match/${match.MatchID}`, { state: { match } })
+        }
         return (
 
-            <div className="match" key={index}>
+            <div className="match" onClick={matchClickHandler}>
                 <div className="date">{match.Date}</div>
                 <div className="team-score">
                     <div className="team">{getTeamName(match.ATeamID)}</div>
@@ -128,7 +95,7 @@ export default function Matches() {
                 <div className="bracket">
                     {groupStage.map((match, index) => (
                         <div key={index}>
-                            {renderMatch(match, index)}
+                            {renderMatch(match)}
                         </div>
                     ))}
                 </div>
@@ -138,7 +105,7 @@ export default function Matches() {
                 <div className="bracket">
                     {roundOf16.map((match, index) => (
                         <div key={index}>
-                            {renderMatch(match, index,)}
+                            {renderMatch(match)}
                         </div>
                     ))}
                 </div>
@@ -148,7 +115,7 @@ export default function Matches() {
                 <div className="qf-bracket">
                     {quarterFinals.map((match, index) => (
                         <div key={index}>
-                            {renderMatch(match, index,)}
+                            {renderMatch(match)}
                         </div>
                     ))}
                 </div>
@@ -158,7 +125,7 @@ export default function Matches() {
                 <div className="sf-bracket">
                     {semiFinals.map((match, index) => (
                         <div key={index}>
-                            {renderMatch(match, index,)}
+                            {renderMatch(match)}
                         </div>
                     ))}
                 </div>
@@ -168,7 +135,7 @@ export default function Matches() {
                 <div className="f-bracket">
                     {final.map((match, index) => (
                         <div key={index}>
-                            {renderMatch(match, index,)}
+                            {renderMatch(match)}
                         </div>
                     ))}
                 </div>
