@@ -5,7 +5,7 @@ export default function MatchDetails() {
     const { matchDetails } = location.state;
 
     return (
-        <div>
+        <div className="page">
             <h1>Match Details</h1>
             <p>{matchDetails.date}</p>
             <h2>{matchDetails.aTeam.name} vs {matchDetails.bTeam.name}</h2>

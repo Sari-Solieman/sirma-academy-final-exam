@@ -59,17 +59,22 @@ export default function Matches() {
             }
             navigate(`/MatchDetails/${match.ID}`, { state: { matchDetails } })
         }
+
+        const aTeamStyle = aTeamScore > bTeamScore ? { fontWeight: 'bold' } : {};
+
+        const bTeamStyle = bTeamScore > aTeamScore ? { fontWeight: 'bold' } : {};
+
         return (
 
             <div className="match" onClick={matchClickHandler}>
                 <div className="date">{match.Date}</div>
                 <div className="team-score">
-                    <div className="team">{getTeamName(match.ATeamID)}</div>
-                    <div className="score">{aTeamScore}</div>
+                    <div className="team" style={aTeamStyle}>{getTeamName(match.ATeamID)}</div>
+                    <div className="score" style={aTeamStyle}>{aTeamScore}</div>
                 </div>
                 <div className="team-score">
-                    <div className="team">{getTeamName(match.BTeamID)}</div>
-                    <div className="score">{bTeamScore}</div>
+                    <div className="team" style={bTeamStyle}>{getTeamName(match.BTeamID)}</div>
+                    <div className="score" style={bTeamStyle}>{bTeamScore}</div>
                 </div>
             </div>
         );
@@ -113,54 +118,56 @@ export default function Matches() {
     return (
         <>
             <div className="page">
-                <h2 className="grp-stage-h2">Group Stage</h2>
-                <div className="group-stage">
-                    {groupStage.map((match, index) => (
-                        <div key={index}>
-                            {renderMatch(match)}
+                <div>
+                    <h2 className="grp-stage-h2">Group Stage</h2>
+                    <div className="group-stage">
+                        {groupStage.map((match, index) => (
+                            <div key={index}>
+                                {renderMatch(match)}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="bracket-view">
+                    <div>
+                        <h2>Round Of 16</h2>
+                        <div className="bracket">
+                            {roundOf16.map((match, index) => (
+                                <div key={index}>
+                                    {renderMatch(match)}
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </div>
-            <div className="bracket-view">
-                <div>
-                    <h2>Round Of 16</h2>
-                    <div className="bracket">
-                        {roundOf16.map((match, index) => (
-                            <div key={index}>
-                                {renderMatch(match)}
-                            </div>
-                        ))}
                     </div>
-                </div>
-                <div>
-                    <h2>Quarter Finals</h2>
-                    <div className="qf-bracket">
-                        {quarterFinals.map((match, index) => (
-                            <div key={index}>
-                                {renderMatch(match)}
-                            </div>
-                        ))}
+                    <div className="qf">
+                        <h2>Quarter Finals</h2>
+                        <div className="qf-bracket">
+                            {quarterFinals.map((match, index) => (
+                                <div key={index}>
+                                    {renderMatch(match)}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h2>Semi Finals</h2>
-                    <div className="sf-bracket">
-                        {semiFinals.map((match, index) => (
-                            <div key={index}>
-                                {renderMatch(match)}
-                            </div>
-                        ))}
+                    <div className="sf">
+                        <h2>Semi Finals</h2>
+                        <div className="sf-bracket">
+                            {semiFinals.map((match, index) => (
+                                <div key={index}>
+                                    {renderMatch(match)}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h2>Final</h2>
-                    <div className="f-bracket">
-                        {final.map((match, index) => (
-                            <div key={index}>
-                                {renderMatch(match)}
-                            </div>
-                        ))}
+                    <div className="f">
+                        <h2>Final</h2>
+                        <div className="f-bracket">
+                            {final.map((match, index) => (
+                                <div key={index}>
+                                    {renderMatch(match)}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

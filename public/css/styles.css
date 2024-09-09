@@ -7,7 +7,7 @@ nav {
     width: 100%;
 }
 
-ul {
+.header-list {
     list-style: none;
     display: flex;
     flex-direction: row;
@@ -21,15 +21,16 @@ a {
 
 body {
     background-color: #ccc;
-    margin: auto;
+    margin: 0;
 }
 
 .page {
+    margin-top: 100px;
     margin-left: 20px;
 }
 
 .grp-stage-h2 {
-    margin-top: 100px;
+
     text-align: center;
 }
 
@@ -38,16 +39,25 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
-    align-items: center;
-    justify-content: center;
+
 }
 
 .bracket-view {
     display: flex;
     flex-direction: row;
     gap: 50px;
-    margin-left: 20px;
     text-align: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.team-score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 3px;
+
 }
 
 .bracket {
@@ -58,46 +68,50 @@ body {
     gap: 10px;
 }
 
-.team-score {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 3px;
-}
-
 .match {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    border: 2px solid;
     width: 200px;
     height: 70px;
     background-color: azure;
     cursor: pointer;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
 }
 
 .match:hover {
-    background-color: red;
+    background-color: rgb(164, 164, 164);
 }
 
 .date {
     text-align: center;
 }
 
-.qf-bracket {
-    height: 78vh;
+.qf {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    margin-top: 57px;
+    gap: 45px;
+}
+
+.qf-bracket {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 90px;
+}
+
+.sf {
+    display: flex;
+    flex-direction: column;
+    gap: 130px;
 }
 
 .sf-bracket {
-    height: 55vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 150px;
+    gap: 250px;
 }
 
 .f-bracket {
