@@ -1,26 +1,28 @@
-import parseDate from "../dataFormat";
+import { parseDate } from "./scripts/dateFormat";
 import { useNavigate } from "react-router-dom";
-import { parseScore } from "../parseScore";
+import { parseScore } from "./scripts/parseScore";
 import { useQuery } from "@tanstack/react-query";
-import { fetchMatches, fetchTeams } from '../queries/dataQuery'
+import { fetchMatches, fetchTeams, fetchPlayers } from '../queries/dataQuery'
 
 export default function Matches() {
 
     const navigate = useNavigate();
 
-    // Fetch matches using React Query
     const { data: matches, isLoading: matchesLoading, error: matchesError } = useQuery({
         queryKey: ['matches'],
         queryFn: fetchMatches,
     });
 
-    // Fetch teams using React Query
     const { data: teams, isLoading: teamsLoading, error: teamsError } = useQuery({
         queryKey: ['teams'],
         queryFn: fetchTeams,
     });
 
-    // Handle loading and error states
+    const { data: players } = useQuery({
+        queryKey: ['players'],
+        queryFn: fetchPlayers,
+    });
+
     if (matchesLoading || teamsLoading) return <div>Loading...</div>;
     if (matchesError) return <div>Error fetching matches: {matchesError.message}</div>;
     if (teamsError) return <div>Error fetching teams: {teamsError.message}</div>;
@@ -30,12 +32,32 @@ export default function Matches() {
         return team ? team.Name : 'Unknown';
     };
 
+    const getTeamPlayers = (teamID, players) => {
+        const player = players.filter(player => player.TeamID === teamID)
+
+        return player
+    };
+
 
     const renderMatch = (match) => {
         const { aTeamScore, bTeamScore } = parseScore(match.Score);
 
         const matchClickHandler = () => {
-            navigate(`/match/${match.MatchID}`, { state: { match } })
+            const matchDetails = {
+                matchID: match.ID,
+                date: match.Date,
+                aTeam: {
+                    name: getTeamName(match.ATeamID, teams),
+                    players: getTeamPlayers(match.ATeamID, players),
+                    score: aTeamScore,
+                },
+                bTeam: {
+                    name: getTeamName(match.BTeamID, teams),
+                    players: getTeamPlayers(match.BTeamID, players),
+                    score: bTeamScore,
+                },
+            }
+            navigate(`/MatchDetails/${match.ID}`, { state: { matchDetails } })
         }
         return (
 
@@ -89,57 +111,59 @@ export default function Matches() {
 
 
     return (
-        <div className="bracket-view">
-            {<div className="group-stage">
-                <h2>Group Stage</h2>
-                <div className="bracket">
+        <>
+            <div className="page">
+                <h2 className="grp-stage-h2">Group Stage</h2>
+                <div className="group-stage">
                     {groupStage.map((match, index) => (
                         <div key={index}>
                             {renderMatch(match)}
                         </div>
                     ))}
                 </div>
-            </div>}
-            <div>
-                <h2>Round Of 16</h2>
-                <div className="bracket">
-                    {roundOf16.map((match, index) => (
-                        <div key={index}>
-                            {renderMatch(match)}
-                        </div>
-                    ))}
+            </div>
+            <div className="bracket-view">
+                <div>
+                    <h2>Round Of 16</h2>
+                    <div className="bracket">
+                        {roundOf16.map((match, index) => (
+                            <div key={index}>
+                                {renderMatch(match)}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <h2>Quarter Finals</h2>
+                    <div className="qf-bracket">
+                        {quarterFinals.map((match, index) => (
+                            <div key={index}>
+                                {renderMatch(match)}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <h2>Semi Finals</h2>
+                    <div className="sf-bracket">
+                        {semiFinals.map((match, index) => (
+                            <div key={index}>
+                                {renderMatch(match)}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <h2>Final</h2>
+                    <div className="f-bracket">
+                        {final.map((match, index) => (
+                            <div key={index}>
+                                {renderMatch(match)}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-            <div>
-                <h2>Quarter Finals</h2>
-                <div className="qf-bracket">
-                    {quarterFinals.map((match, index) => (
-                        <div key={index}>
-                            {renderMatch(match)}
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div>
-                <h2>Semi Finals</h2>
-                <div className="sf-bracket">
-                    {semiFinals.map((match, index) => (
-                        <div key={index}>
-                            {renderMatch(match)}
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div>
-                <h2>Final</h2>
-                <div className="f-bracket">
-                    {final.map((match, index) => (
-                        <div key={index}>
-                            {renderMatch(match)}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+        </>
     );
 };

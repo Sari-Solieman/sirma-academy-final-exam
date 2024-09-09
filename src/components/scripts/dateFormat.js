@@ -1,4 +1,4 @@
-export default function parseDate(dateString) {
+export const parseDate = (dateString) => {
 
     const formats = [
         'DD-MM-YYYY', 'DD/MM/YYYY', 'DD.MM.YYYY',

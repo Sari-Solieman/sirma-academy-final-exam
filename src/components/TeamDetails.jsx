@@ -1,58 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { fetchTeams, fetchPlayers } from '../queries/dataQuery'
+import { useQuery } from "@tanstack/react-query";
+
 
 export default function TeamDetails() {
-    const [teams, setTeams] = useState([]);
-    const [players, setPlayers] = useState([]);
+    const { data: players, isLoading: playersLoading, error: playersError } = useQuery({
+        queryKey: ['players'],
+        queryFn: fetchPlayers,
+    });
 
-    useEffect(() => {
-        const fetchTeamsData = async () => {
-            try {
-                const teamResponse = await fetch('/data/teams.csv'); 
-                if (!teamResponse.ok) throw new Error('Teams CSV load error');
+    const { data: teams, isLoading: teamsLoading, error: teamsError } = useQuery({
+        queryKey: ['teams'],
+        queryFn: fetchTeams,
+    });
 
-                const teamText = await teamResponse.text();
-                const teamRows = teamText.split('\n').map(row => row.split(','));
-                const firstTeam = teamRows[0];
-                const teamData = teamRows.slice(1).map(row => {
-                    const obj = {};
-                    firstTeam.forEach((header, index) => {
-                        obj[header.trim()] = row[index]?.trim();
-                    });
-                    return obj;
-                });
-                
-                setTeams(teamData);
+    if (playersLoading || teamsLoading) return <div>Loading...</div>;
+    if (playersError) return <div>Error fetching players: {playersError.message}</div>;
+    if (teamsError) return <div>Error fetching teams: {teamsError.message}</div>;
 
-            } catch (error) {
-                return('Error fetching teams data:', error);
-            }
-        };
-
-        const fetchPlayersData = async () => {
-            try {
-                const playerResponse = await fetch('/data/players.csv'); 
-                if (!playerResponse.ok) throw new Error('Players CSV load error');
-
-                const playerText = await playerResponse.text();
-                const playerRows = playerText.split('\n').map(row => row.split(','));
-                const firstPlayer = playerRows[0];
-                const playerData = playerRows.slice(1).map(row => {
-                    const obj = {};
-                    firstPlayer.forEach((player, index) => {
-                        obj[player.trim()] = row[index]?.trim();
-                    });
-                    return obj;
-                });
-                setPlayers(playerData);
-
-            } catch (error) {
-                return('Error fetching players data:', error);
-            }
-        };
-
-        fetchTeamsData();
-        fetchPlayersData();
-    }, []);
 
     const getPlayersForTeam = (teamID) => {
 
@@ -64,7 +28,7 @@ export default function TeamDetails() {
         };
 
         return players
-            .filter(player => player.TeamID === teamID) 
+            .filter(player => player.TeamID === teamID)
             .sort((a, b) => {
                 const posA = positionOrder[a.Position] || 999;
                 const posB = positionOrder[b.Position] || 999;

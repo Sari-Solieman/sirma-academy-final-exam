@@ -35,6 +35,7 @@ export const fetchTeams = async () => {
     });
 
     return teamData;
+    
 };
 
 export const fetchPlayers = async () => {
@@ -54,5 +55,5 @@ export const fetchPlayers = async () => {
     });
 
     return playerData;
-};
+};  
 
