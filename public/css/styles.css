@@ -25,6 +25,8 @@ body {
 }
 
 .page {
+    display: flex;
+    flex-direction: column;
     margin-top: 100px;
     margin-left: 20px;
 }
@@ -77,6 +79,7 @@ body {
     background-color: azure;
     cursor: pointer;
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
 }
 
 .match:hover {
@@ -118,4 +121,67 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 310px;
+}
+
+.match-info {
+    text-align: center;
+}
+
+.teams-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+
+}
+
+.players-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+.field {
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+
+
+
+
+.team-click {
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.3);
+    border: none;
+    height: 50px;
+    width: 200px;
+    font-size: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.team-click:hover {
+    background-color: rgb(164, 164, 164);
+}
+
+.match-details-team {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.score-details {
+    font-size: 50px;
+} 
+@media only screen and (max-width: 600px) {
+    .match-details-team {
+        flex-direction: column;
+    }
 }

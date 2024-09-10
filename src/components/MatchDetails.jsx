@@ -1,35 +1,53 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function MatchDetails() {
     const location = useLocation();
     const { matchDetails } = location.state;
+    const navigate = useNavigate();
+
+    const teamClickHandler = (teamID) => {
+
+        navigate(`/TeamDetails/${teamID}`)
+    }
 
     return (
         <div className="page">
-            <h1>Match Details</h1>
-            <p>{matchDetails.date}</p>
-            <h2>{matchDetails.aTeam.name} vs {matchDetails.bTeam.name}</h2>
-            <p>Score: {matchDetails.aTeam.score} - {matchDetails.bTeam.score}</p>
+            <div className="match-info">
+                <h1>Match Details</h1>
+                <p>{matchDetails.date}</p>
+                <div className="match-details-team">
+                    <div>
+                        <button
+                            className="team-click"
+                            onClick={() => teamClickHandler(matchDetails.aTeam.id)}>{matchDetails.aTeam.name}
+                        </button>
 
-            <h3>{matchDetails.aTeam.name} Players</h3>
-            <ul>
-                {matchDetails.aTeam.players.map(player => (
-                    <li key={player.ID}>
-                        {player.TeamNumber} 
-                        {player.FullName} 
-                        {player.Position} </li>
-                ))}
-            </ul>
+                        <div className="score-details">
+                            {matchDetails.aTeam.score}
+                        </div>
 
-            <h3>{matchDetails.bTeam.name} Players</h3>
-            <ul>
-                {matchDetails.bTeam.players.map(player => (
-                    <li key={player.ID}>
-                    {player.TeamNumber} 
-                    {player.FullName} 
-                    {player.Position} </li>
-                ))}
-            </ul>
+                        <img className="field" src="/assets/field.png" />
+                    </div>
+
+                    <div>
+                        <button
+                            className="team-click"
+                            onClick={() => teamClickHandler(matchDetails.bTeam.id)}>{matchDetails.bTeam.name}
+                        </button>
+
+
+                        <div className="score-details">
+                            {matchDetails.bTeam.score}
+                        </div>
+
+                        <img className="field" src="/assets/field.png" />
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+
+
     );
 }

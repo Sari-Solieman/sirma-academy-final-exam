@@ -1,8 +1,9 @@
-import { parseDate } from "./scripts/dateFormat";
 import { useNavigate } from "react-router-dom";
-import { parseScore } from "./scripts/parseScore";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMatches, fetchTeams, fetchPlayers } from '../queries/dataQuery'
+import { parseScore } from "../scripts/parseScore";
+import { parseDate } from "../scripts/dateFormat"
+import { getTeamPlayers } from "../scripts/teamPlayers";
 
 export default function Matches() {
 
@@ -32,11 +33,7 @@ export default function Matches() {
         return team ? team.Name : 'Unknown';
     };
 
-    const getTeamPlayers = (teamID, players) => {
-        const player = players.filter(player => player.TeamID === teamID)
 
-        return player
-    };
 
 
     const renderMatch = (match) => {
@@ -47,12 +44,14 @@ export default function Matches() {
                 matchID: match.ID,
                 date: match.Date,
                 aTeam: {
-                    name: getTeamName(match.ATeamID, teams),
+                    id: match.ATeamID,
+                    name: getTeamName(match.ATeamID),
                     players: getTeamPlayers(match.ATeamID, players),
                     score: aTeamScore,
                 },
                 bTeam: {
-                    name: getTeamName(match.BTeamID, teams),
+                    id: match.BTeamID,
+                    name: getTeamName(match.BTeamID),
                     players: getTeamPlayers(match.BTeamID, players),
                     score: bTeamScore,
                 },

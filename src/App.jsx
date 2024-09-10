@@ -12,8 +12,8 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/TeamDetails' element={<TeamDetails />} />
         <Route path='/MatchDetails/:matchId' element={<MatchDetails />} />
+        <Route path='/TeamDetails/:teamID' element={<TeamDetails />} />
       </Routes>
     </>
   )

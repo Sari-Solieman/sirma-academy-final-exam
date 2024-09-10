@@ -35,7 +35,7 @@ export const fetchTeams = async () => {
     });
 
     return teamData;
-    
+
 };
 
 export const fetchPlayers = async () => {
@@ -55,5 +55,21 @@ export const fetchPlayers = async () => {
     });
 
     return playerData;
-};  
+};
 
+export const fetchPlayersRecords = async () => {
+    const playerRecordResponse = await fetch('/data.recrods.csv');
+    if (!playerRecordResponse.ok) throw new Error('Players records load error')
+
+    const playerRecordText = await playerRecordResponse.text();
+    const playerRecordRows = playerRecordText.split('\n').map(row => row.split(','));
+    const firstPlayerRecord = playerRecordRows[0];
+    const playerRecordData = playerRecordRows.slice(1).map(row => {
+        const records = {};
+        firstPlayerRecord.forEach((record, index) => {
+            records[record.trim()] = row[index]?.trim()
+        })
+        return records;
+    })
+    return playerRecordData
+}
