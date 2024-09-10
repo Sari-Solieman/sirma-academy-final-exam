@@ -58,18 +58,19 @@ export const fetchPlayers = async () => {
 };
 
 export const fetchPlayersRecords = async () => {
-    const playerRecordResponse = await fetch('/data.recrods.csv');
+    const playerRecordResponse = await fetch('/data/records.csv');
     if (!playerRecordResponse.ok) throw new Error('Players records load error')
 
     const playerRecordText = await playerRecordResponse.text();
     const playerRecordRows = playerRecordText.split('\n').map(row => row.split(','));
     const firstPlayerRecord = playerRecordRows[0];
     const playerRecordData = playerRecordRows.slice(1).map(row => {
-        const records = {};
+        const playersRecords = {};
         firstPlayerRecord.forEach((record, index) => {
-            records[record.trim()] = row[index]?.trim()
-        })
-        return records;
-    })
+            playersRecords[record.trim()] = row[index]?.trim();
+        });
+        return playersRecords;
+    });
+
     return playerRecordData
 }

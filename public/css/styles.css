@@ -147,9 +147,12 @@ body {
 
 .field {
     height: 400px;
+    width: 280px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
+    background-image: url(/assets/field.png);
+    background-size: contain;
 }
 
 
@@ -179,7 +182,12 @@ body {
 
 .score-details {
     font-size: 50px;
-} 
+}
+
+.played-players {
+    list-style: none;
+}
+
 @media only screen and (max-width: 600px) {
     .match-details-team {
         flex-direction: column;
