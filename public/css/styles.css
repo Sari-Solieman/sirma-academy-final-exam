@@ -232,13 +232,11 @@ h2 {
 }
 
 .a-players {
-    color: rgb(144, 10, 10);
     font-family: cursive;
     font-weight: bold;
 }
 
 .b-players {
-    color: rgb(32, 8, 109);
     font-family: cursive;
     font-weight: bold;
 
@@ -310,6 +308,28 @@ h2 {
     padding: 4px;
 }
 
+.CM,
+.CDM,
+.LM,
+.RM {
+    color: yellow;
+}
+
+.LB,
+.RB,
+.LWB,
+.RWB,
+.CB {
+    color: blue;
+}
+
+.CF,
+.RF,
+.LF,
+.LW,
+.RW {
+    color: red;
+}
 
 @media only screen and (max-width: 768px) {
     .match-details-team {

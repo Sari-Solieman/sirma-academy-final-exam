@@ -97,23 +97,23 @@ export default function MatchDetails() {
                         <div className="field" >
                             <ul className="a-players">
                                 {aTeamPlayers.keeper.map((player, id) => (
-                                    <li key={id}>{player.Position}</li>
+                                    <li className={`${player.positions}`} key={id}>{player.Position}</li>
                                 ))}
                             </ul>
                             <ul className="defenders-list a-players">
                                 {aTeamPlayers.defender.map((player, id) => (
-                                    <li key={id}>{player.positionType}</li>
+                                    <li className={`${player.positionType}`} key={id}>{player.positionType}</li>
                                 ))}
                             </ul>
                             <ul className="midfielders-list a-players">
                                 {aTeamPlayers.midfielder.map((player, id) => (
-                                    <li key={id}>{player.positionType}</li>
+                                    <li className={`${player.positionType}`} key={id}>{player.positionType}</li>
                                 ))}
                             </ul>
                             <ul
                                 className="forwards-list a-players">
                                 {aTeamPlayers.forward.map((player, id) => (
-                                    <li key={id}>{player.positionType}</li>
+                                    <li className={`${player.positionType}`} key={id}>{player.positionType}</li>
                                 ))}
                             </ul>
                         </div>
@@ -132,23 +132,23 @@ export default function MatchDetails() {
                         <div className="field">
                             <ul className="b-players">
                                 {bTeamPlayers.keeper.map((player, id) => (
-                                    <li key={id}>{player.Position}</li>
+                                    <li className={`${player.positions}`} key={id}>{player.Position}</li>
                                 ))}
                             </ul>
                             <ul className="defenders-list b-players">
                                 {bTeamPlayers.defender.map((player, id) => (
-                                    <li key={id}>{player.positionType}</li>
+                                    <li className={`${player.positionType}`} key={id}>{player.positionType}</li>
                                 ))}
                             </ul>
 
                             <ul className="midfielders-list b-players">
                                 {bTeamPlayers.midfielder.map((player, id) => (
-                                    <li key={id}>{player.positionType}</li>
+                                    <li className={`${player.positionType}`} key={id}>{player.positionType}</li>
                                 ))}
                             </ul>
                             <ul className="forwards-list b-players">
                                 {bTeamPlayers.forward.map((player, id) => (
-                                    <li key={id}>{player.positionType}</li>
+                                    <li className={`${player.positionType}`} key={id}>{player.positionType}</li>
                                 ))}
                             </ul>
                         </div>
