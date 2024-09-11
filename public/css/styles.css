@@ -231,12 +231,6 @@ h2 {
     color: #191970;
 }
 
-.played-players {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
 .a-players {
     color: rgb(144, 10, 10);
     font-family: cursive;
@@ -288,7 +282,6 @@ h2 {
     font-weight: bold;
 }
 
-/* Position-specific background colors */
 .GK {
     background-color: green;
     color: white;
