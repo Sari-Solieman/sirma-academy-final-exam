@@ -1,4 +1,7 @@
-Euro 2024 tournament website
+## Euro 2024 tournament website
+
+# Demo link: https://sirma-academy-final-exam.onrender.com/ 
+
 
 1. homepage : includes all matchs by stages
     # fetch the data from the csv files using React Query.
