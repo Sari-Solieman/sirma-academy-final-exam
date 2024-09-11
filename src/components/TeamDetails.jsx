@@ -50,7 +50,7 @@ export default function TeamDetails() {
                     <li className='teams-info' key={player.ID}>
                         <div>{player.TeamNumber}</div>
                         <div>{player.FullName}</div>
-                        <div>{player.Position}</div>
+                        <div className={`${player.Position}`}>{player.Position}</div>
                     </li>
                 ))}
             </ul>

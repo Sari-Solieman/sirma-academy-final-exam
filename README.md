@@ -1,8 +1,14 @@
-# React + Vite
+Euro 2024 tournament website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. homepage : includes all matchs by stages
+    # fetch the data from the csv files using React Query.
+    # bracket view for the playoffs.
+    # add click function on each match to show details.
 
-Currently, two official plugins are available:
+2. matchdetails : includes date, team name and result
+    # Visualized side by side both teams with their corresponding formation and players.
+    # sorted players position on the field.
+    # used a function that assigns position type to each player based on his position.
+    # added click handler to each team based on it's id to show the full squad.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. team details : includes full squad(players name, positions and numbers)

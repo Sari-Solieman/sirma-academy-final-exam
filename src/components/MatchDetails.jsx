@@ -80,7 +80,7 @@ export default function MatchDetails() {
                             <li className="teams-info" key={ID}>
                                 <div>{player.TeamNumber}</div>
                                 <div>{player.FullName}</div>
-                                <div>{player.Position}</div>
+                                <div className={`${player.Position}`}>{player.Position}</div>
                             </li>
                         ))}
                         </ul>
@@ -164,7 +164,7 @@ export default function MatchDetails() {
                                 <li className="teams-info" key={ID}>
                                     <div>{player.TeamNumber}</div>
                                     <div>{player.FullName}</div>
-                                    <div>{player.Position}</div>
+                                    <div className={`${player.Position}`}>{player.Position}</div>
                                 </li>
                             ))}
                             </ul>
