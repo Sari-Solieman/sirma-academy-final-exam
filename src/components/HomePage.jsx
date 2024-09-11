@@ -128,15 +128,13 @@ export default function Matches() {
                     </div>
                 </div>
                 <div className="bracket-view">
-                    <div>
+                    <div className="bracket">
                         <h2>Round Of 16</h2>
-                        <div className="bracket">
-                            {roundOf16.map((match, index) => (
-                                <div key={index}>
-                                    {renderMatch(match)}
-                                </div>
-                            ))}
-                        </div>
+                        {roundOf16.map((match, index) => (
+                            <div key={index}>
+                                {renderMatch(match)}
+                            </div>
+                        ))}
                     </div>
                     <div className="qf">
                         <h2>Quarter Finals</h2>
@@ -160,7 +158,7 @@ export default function Matches() {
                     </div>
                     <div className="f">
                         <h2>Final</h2>
-                        <div className="f-bracket">
+                        <div>
                             {final.map((match, index) => (
                                 <div key={index}>
                                     {renderMatch(match)}
@@ -168,6 +166,8 @@ export default function Matches() {
                             ))}
                         </div>
                     </div>
+                    <img className="trophy" src="/assets/trophy.png" />
+
                 </div>
             </div>
         </>

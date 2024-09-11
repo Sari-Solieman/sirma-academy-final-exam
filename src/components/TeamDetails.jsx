@@ -37,11 +37,14 @@ export default function TeamDetails() {
             return posA - posB
         })
 
-
     return (
         <div className='teams-details'>
-            <h1>Team Details</h1>
             <h2>{team ? team.Name : 'Unknown Team'}</h2>
+            <ul className='teams-info'>
+                <li>No.</li>
+                <li>Player</li>
+                <li>Pos.</li>
+            </ul>
             <ul className='players-list'>
                 {fillteredPlayers.map((player) => (
                     <li className='teams-info' key={player.ID}>
